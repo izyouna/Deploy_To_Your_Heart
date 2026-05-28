@@ -86,14 +86,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px 0;
+    margin: 10px 0;
     position: relative;
     perspective: 600px; /* เพิ่มมิติความลึกแบบ 3D */
 }
 
 .spinning-animal {
-    width: 96px;
-    height: 96px;
+    width: 160px;
+    height: 160px;
     object-fit: contain;
     /* แอนิเมชันหมุนแนวตั้ง 360 องศา (รอบแกน Y) */
     animation: spin360 6s linear infinite;
