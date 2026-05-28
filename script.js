@@ -175,21 +175,20 @@ class PromiseCoupon {
         this.acceptBtn.addEventListener('click', () => this.claimReward());
     }
 
-    // ฟังก์ชันทำให้ปุ่มปฏิเสธวิ่งหนีสุ่มไปบนหน้าจอ
+    // ฟังก์ชันทำให้ปุ่มปฏิเสธวิ่งหนีสุ่มเฉพาะในขอบเขตของกล่องคูปอง (couponBox)
     runAway() {
-        // คำนวณช่วงพิกัดสุ่มปลอดภัยเพื่อให้ปุ่มไม่ออกนอกเขตกรอบหน้าต่าง
-        const safeMargin = 80;
-        const maxX = window.innerWidth - this.rejectBtn.offsetWidth - safeMargin;
-        const maxY = window.innerHeight - this.rejectBtn.offsetHeight - safeMargin;
+        // กำหนดระยะขอบความปลอดภัยไม่ให้หลุดขอบกล่องคูปอง
+        const padding = 20;
+        const widthLimit = this.couponBox.clientWidth - this.rejectBtn.offsetWidth - 2 * padding;
+        const heightLimit = this.couponBox.clientHeight - this.rejectBtn.offsetHeight - 2 * padding;
 
-        const randomX = Math.max(safeMargin, Math.floor(Math.random() * maxX));
-        const randomY = Math.max(safeMargin, Math.floor(Math.random() * maxY));
+        const randomX = padding + Math.floor(Math.random() * Math.max(1, widthLimit));
+        const randomY = padding + Math.floor(Math.random() * Math.max(1, heightLimit));
 
-        // ปรับปุ่มเป็นระบบพิกัดตายตัวเพื่อเคลื่นย้ายได้อย่างอิสระ
-        this.rejectBtn.style.position = 'fixed';
+        // ปรับปุ่มเป็นระบบพิกัดสัมพัทธ์ในกรอบเพื่อเคลื่อนย้ายเฉพาะภายในกล่อง
+        this.rejectBtn.style.position = 'absolute';
         this.rejectBtn.style.left = `${randomX}px`;
         this.rejectBtn.style.top = `${randomY}px`;
-        this.rejectBtn.style.zIndex = '9999';
     }
 
     // แสดงหน้าต่างยินดีต้อนรับและขอบคุณสำเร็จรูป
@@ -234,13 +233,15 @@ class GameController {
         // ปลุกฟังก์ชัน Mute Button
         this.muteBtn.addEventListener('click', () => {
             this.sound.toggleMute('mute-btn');
-        });
+        });        
+        
+        // เล่นเสียงเพลงทันทีหลังจากมีปฏิสัมพันธ์แรก
+        this.sound.play();
     }
 
     // ทำการเปลี่ยนผ่านหน้าจอจากสถานะที่ 1 ไปสู่สถานะที่ 2
     revealSurprise() {
-        // เล่นเสียงเพลงทันทีหลังจากมีปฏิสัมพันธ์แรก
-        this.sound.play();
+
 
         // ระเบิดกระดาษพิกเซล Confetti เฉลิมฉลอง
         this.confetti.spawn();
