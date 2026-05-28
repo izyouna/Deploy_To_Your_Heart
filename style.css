@@ -1,0 +1,431 @@
+/* ==========================================
+   1. DESIGN SYSTEM & RETRO TOKENS (CSS Variables)
+   ========================================== */
+:root {
+  /* โทนสีเกมพิกเซลพาสเทลโรแมนติก */
+  --pixel-bg-start: #E8D3FF; /* สีม่วงลาเวนเดอร์พาสเทล */
+  --pixel-bg-end: #D3FFFC;   /* สีมินต์พาสเทล */
+  --pixel-border: #000000;   /* สีเส้นขอบพิกเซลดำ */
+  --pixel-panel-bg: #FFFFFF; /* สีพื้นหลังกล่องข้อความ */
+  --pixel-accent-red: #FF3366;  /* สีชมพูอมแดงกุหลาบสดใส */
+  --pixel-accent-yellow: #FFCC00; /* สีเหลืองทองแบบตู้เกมเรโทร */
+  --pixel-accent-blue: #33CCFF;  /* สีฟ้าพาสเทลสดใส */
+  --pixel-accent-green: #33FF66; /* สีเขียวเกมบอย */
+  --pixel-shadow-color: rgba(0, 0, 0, 0.15);
+  
+  /* แบบอักษร */
+  --font-retro: 'Press Start 2P', monospace;
+  --font-thai: 'Chakra Petch', sans-serif;
+}
+
+/* รีเซ็ตหน้าเว็บขั้นพื้นฐาน */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    image-rendering: pixelated; /* ทำให้ขอบภาพคมกริบสไตล์พิกเซล */
+}
+
+body {
+    font-family: var(--font-thai);
+    background: linear-gradient(135deg, var(--pixel-bg-start) 0%, var(--pixel-bg-end) 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+    padding: 20px;
+    color: #111;
+}
+
+/* ==========================================
+   2. ANIMATIONS & FLOATING EFFECTS
+   ========================================== */
+
+/* พื้นหลังหัวใจลอยสไตล์พิกเซล */
+#bg-decorations {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.floating-pixel {
+    position: absolute;
+    bottom: -50px;
+    font-size: 24px;
+    animation: floatUp 8s linear infinite;
+    opacity: 0.7;
+    user-select: none;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* การหมุนตัวละครสัตว์ 360 องศาต่อเนื่อง */
+.animal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.spinning-animal {
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+    /* แอนิเมชันหมุน 360 องศา */
+    animation: spin360 12s linear infinite;
+    filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.15));
+}
+
+@keyframes spin360 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* SVG ไอคอนหัวใจเต้น */
+.heart-pulse {
+    display: inline-block;
+    animation: heartBeat 1.2s infinite ease-in-out;
+    fill: var(--pixel-accent-red);
+    width: 64px;
+    height: 64px;
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.2); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+    100% { transform: scale(1); }
+}
+
+/* แอนิเมชันกระพริบตัวอักษร "มีอะไรจะบอก..." */
+.blink-text {
+    animation: textBlink 1.5s infinite step-end;
+    color: var(--pixel-accent-red);
+    font-weight: bold;
+}
+
+@keyframes textBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* แอนิเมชันสั่นปุ่มดึงดูดความสนใจ */
+.wiggle {
+    animation: buttonWiggle 0.6s ease-in-out infinite;
+}
+
+@keyframes buttonWiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg) scale(1.05); }
+    75% { transform: rotate(3deg) scale(1.05); }
+}
+
+/* ==========================================
+   3. CONTAINER & RETRO UI STYLING
+   ========================================== */
+
+.game-wrapper {
+    width: 100%;
+    max-width: 680px;
+    position: relative;
+    z-index: 2;
+}
+
+/* แผง UI หลักสไตล์พิกเซลเกม */
+.pixel-panel {
+    background-color: var(--pixel-panel-bg);
+    border: 4px solid var(--pixel-border);
+    box-shadow: 6px 6px 0px var(--pixel-border);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* กรอบสีมุมแบบย้อนยุค */
+.pixel-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--pixel-accent-red) 0px,
+        var(--pixel-accent-red) 20px,
+        var(--pixel-accent-yellow) 20px,
+        var(--pixel-accent-yellow) 40px,
+        var(--pixel-accent-blue) 40px,
+        var(--pixel-accent-blue) 60px
+    );
+}
+
+/* หัวข้อเกม 8-bit */
+.game-title {
+    font-family: var(--font-retro);
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 20px 0;
+    color: #222;
+    word-wrap: break-word;
+}
+
+/* ปุ่มพิกเซลย้อนยุค */
+.pixel-btn {
+    font-family: var(--font-retro);
+    font-size: 11px;
+    font-weight: bold;
+    padding: 15px 25px;
+    color: #000;
+    background-color: var(--pixel-accent-yellow);
+    border: 4px solid var(--pixel-border);
+    box-shadow: 4px 4px 0px var(--pixel-border);
+    cursor: pointer;
+    transition: transform 0.05s, box-shadow 0.05s;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 5px;
+}
+
+.pixel-btn:hover {
+    background-color: #FFE680;
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--pixel-border);
+}
+
+.pixel-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px var(--pixel-border);
+}
+
+/* ปุ่มปฏิเสธ/ยกเลิกสไตล์พิกเซล */
+.pixel-btn.secondary {
+    background-color: #E2E2E2;
+}
+.pixel-btn.secondary:hover {
+    background-color: #EEEEEE;
+}
+
+/* ปุ่มควบคุมเพลง */
+.music-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    padding: 8px 12px;
+    font-family: var(--font-retro);
+    font-size: 8px;
+    background: #fff;
+}
+
+/* ==========================================
+   4. STAGES AND STATE MANAGEMENT
+   ========================================== */
+
+/* State 1: The Beginning (หน้าแรกเริ่ม) */
+#state-1 {
+    display: block;
+    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+}
+
+#state-1.fade-out {
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+/* State 2: The Reveal & Journey (เนื้อหาที่เปิดเผย) */
+#state-2 {
+    display: none;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s ease-in-out;
+}
+
+#state-2.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================
+   5. MAIN SURPRISE CONTENT (TIMELINE & PROMISE)
+   ========================================== */
+
+/* การ์ดอัลบั้มเดินทางคู่รัก */
+.album-title {
+    font-family: var(--font-retro);
+    font-size: 14px;
+    color: var(--pixel-accent-red);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* เลย์เอาต์อัลบั้มรูปภาพ */
+.album-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+/* กรอบรูปถ่ายโพลารอยด์พิกเซล */
+.polaroid-card {
+    background: #fff;
+    border: 4px solid var(--pixel-border);
+    box-shadow: 4px 4px 0px var(--pixel-border);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.polaroid-card:hover {
+    transform: scale(1.02) rotate(1deg);
+}
+
+/* กล่องภาพพิกเซล */
+.polaroid-img-wrapper {
+    width: 100%;
+    height: 220px;
+    border: 4px solid var(--pixel-border);
+    background-color: #EEE;
+    overflow: hidden;
+    position: relative;
+}
+
+.polaroid-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* คำอธิบายใต้รูปถ่าย */
+.polaroid-caption {
+    margin-top: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.6;
+}
+
+.polaroid-caption span {
+    display: block;
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+    font-family: var(--font-retro);
+}
+
+/* การ์ดคำสัญญา / คูปอง */
+.coupon-box {
+    background-color: #FFFBE6;
+    border: 4px dashed var(--pixel-accent-red);
+    padding: 20px;
+    border-radius: 12px;
+    margin: 25px 0;
+    position: relative;
+}
+
+.coupon-header {
+    font-family: var(--font-retro);
+    font-size: 11px;
+    color: var(--pixel-accent-red);
+    margin-bottom: 10px;
+}
+
+/* กล่องขอบคุณหลังจากกดยอมรับ */
+#success-card {
+    display: none;
+    animation: scaleUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleUp {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* แคนวาสสำหรับโปรยเอฟเฟกต์ Confetti */
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* ==========================================
+   6. RESPONSIVE DESIGN (ปรับแต่งทุกขนาดหน้าจอ)
+   ========================================== */
+
+/* สำหรับหน้าจอแท็บเล็ตและเดสก์ท็อป */
+@media (min-width: 600px) {
+    .album-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* แสดงรูปภาพเรียงกัน 3 คอลัมน์แนวนอน */
+        gap: 15px;
+    }
+    
+    .polaroid-img-wrapper {
+        height: 150px; /* ลดส่วนสูงเพื่อความสมดุลในแนวนอน */
+    }
+
+    .polaroid-caption {
+        font-size: 13px;
+    }
+
+    .game-title {
+        font-size: 20px;
+    }
+
+    .album-title {
+        font-size: 18px;
+    }
+}
+
+/* สำหรับมือถือขนาดเล็กเป็นพิเศษ */
+@media (max-width: 360px) {
+    .pixel-panel {
+        padding: 15px;
+    }
+    .pixel-btn {
+        font-size: 9px;
+        padding: 10px 15px;
+    }
+    .game-title {
+        font-size: 14px;
+    }
+}

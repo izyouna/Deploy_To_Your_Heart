@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Pixel Surprise for My Favorite Player</title>
+    
+    <!-- ดึงฟอนต์ภาษาไทยและภาษาอังกฤษสไตล์ Retro จาก Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- เชื่อมโยงกับสไตล์ชีตภายนอก (External CSS) -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- เชื่อมโยงกับสคริปต์ภายนอก (External JS) -->
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <!-- พื้นหลังสำหรับปุ่มตกแต่งลอยสไตล์พิกเซล -->
+    <div id="bg-decorations"></div>
+
+    <!-- แคนวาสสำหรับ Confetti (พลุกระดาษเหลี่ยม 8-bit) -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- ปุ่มเปิด/ปิดเสียงเพลงพื้นหลัง -->
+    <button id="mute-btn" class="pixel-btn music-btn">🔊 MUSIC</button>
+    
+    <!-- โครงสร้างเล่นไฟล์เพลงพื้นหลัง (Background Music)
+         * คำอธิบายสำหรับการแก้ไขเสียงเพลง:
+         * นำลิงก์ไฟล์เพลงของคุณมาใส่ใน src ด้านล่างแทนที่ลิงก์ทดสอบนี้ (แนะนำไฟล์ .mp3 หรือ .ogg)
+    -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="game-wrapper">
+
+        <!-- =======================================================
+             STATE 1: THE BEGINNING (หน้าเริ่มเกม / สารภาพรักแรกเริ่ม)
+             ======================================================= -->
+        <div id="state-1" class="pixel-panel">
+            <!-- หัวใจ SVG พิกเซลเต้นดึงดูดความสนใจ -->
+            <svg class="heart-pulse" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            
+            <!-- 
+                * คำอธิบายการแก้ไขข้อความใน STATE 1:
+                * แก้ไขชื่อแฟนจาก "[ชื่อแฟน]" เป็นชื่อจริงของแฟนคุณได้เลย เช่น "ถึง น้อนบีบี..."
+            -->
+            <h1 class="game-title">
+                ถึง <span class="blink-text">[ชื่อแฟน]</span>...<br>
+                ยินดีต้อนรับสู่กล่องบันทึกของเรา
+            </h1>
+
+            <p style="margin: 15px 0; font-size: 15px; font-weight: 600; color: #555;">
+                มีข้อความลับถูกส่งมาถึงคุณ! พร้อมที่จะอ่านมันหรือยัง?
+            </p>
+            
+            <!-- ปุ่มคลิกแบบสั่น (Wiggle) -->
+            <button id="start-btn" class="pixel-btn wiggle">
+                [ START GAME ]
+            </button>
+        </div>
+
+
+        <!-- =======================================================
+             STATE 2: THE REVEAL & JOURNEY (กล่องบันทึกการเดินทาง & คำสัญญา)
+             ======================================================= -->
+        <div id="state-2" class="pixel-panel">
+            
+            <!-- ส่วนหัวแสดงหัวเรื่องการเดินทาง -->
+            <h2 class="album-title">
+                💖 OUR JOURNEY LOG 💖
+            </h2>
+
+            <!-- ตัวละครรูปสัตว์สไตล์พิกเซล 2D ที่จะหมุน 360 องศาต่อเนื่อง
+                 * ลิงก์รูปภาพถูกกำหนดเป็น 'pixel_animal.png' (ไฟล์รูปสัตว์พิกเซลที่เราได้สร้างไว้)
+            -->
+            <div class="animal-container">
+                <img src="pixel_animal.png" alt="Pixel Animal Character" class="spinning-animal">
+            </div>
+
+            <!-- ข้อความบรรยายความรักเกริ่นนำ -->
+            <p style="line-height: 1.8; font-size: 16px; margin-bottom: 25px; font-weight: 600;">
+                "การมีเธออยู่ในทุกระดับของความสุข คือสิ่งที่ดีที่สุดในชีวิตเราเลยนะ..."
+            </p>
+
+            <!-- =======================================================
+                 THE TRAVEL ALBUM CARD (ประวัติรูปคู่รักพิกเซลการเดินทาง)
+                 ======================================================= -->
+            <div class="album-grid">
+                
+                <!-- การ์ดรูปที่ 1: วันที่เจอกันครั้งแรก
+                     * การแก้ไขรูปถ่าย: เปลี่ยนจาก 'pixel_meeting.png' เป็นลิงก์รูปถ่ายของคุณในอินเทอร์เน็ต
+                     * การแก้ไขคำบรรยาย: แก้ไขวันที่และข้อความบรรยายด้านล่าง
+                -->
+                <div class="polaroid-card">
+                    <div class="polaroid-img-wrapper">
+                        <img src="pixel_meeting.png" alt="First Meeting" class="polaroid-img">
+                    </div>
+                    <div class="polaroid-caption">
+                        เจอกันครั้งแรก!
+                        <span>2024-02-14</span>
+                    </div>
+                </div>
+
+                <!-- การ์ดรูปที่ 2: เดทแรก
+                     * การแก้ไขรูปถ่าย: เปลี่ยนจาก 'pixel_date.png' เป็นลิงก์รูปถ่ายของคุณ
+                -->
+                <div class="polaroid-card">
+                    <div class="polaroid-img-wrapper">
+                        <img src="pixel_date.png" alt="First Date" class="polaroid-img">
+                    </div>
+                    <div class="polaroid-caption">
+                        เดทแรกแสนหวาน
+                        <span>2024-04-13</span>
+                    </div>
+                </div>
+
+                <!-- การ์ดรูปที่ 3: รูปคู่ที่ชอบที่สุด
+                     * การแก้ไขรูปถ่าย: เปลี่ยนจาก 'pixel_favorite.png' เป็นลิงก์รูปถ่ายของคุณ
+                -->
+                <div class="polaroid-card">
+                    <div class="polaroid-img-wrapper">
+                        <img src="pixel_favorite.png" alt="Our Favorite Photo" class="polaroid-img">
+                    </div>
+                    <div class="polaroid-caption">
+                        รูปที่เราชอบที่สุด
+                        <span>HAPPY TIME</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- =======================================================
+                 THE PROMISE CARD (คูปองคำสัญญาและปุ่มกดปฏิเสธที่หลบหนีได้)
+                 ======================================================= -->
+            <div id="coupon-card" class="coupon-box">
+                <div class="coupon-header">🎁 PLAYER ONE REWARD 🎁</div>
+                
+                <h3 style="font-size: 18px; margin-bottom: 10px; color: #111;">
+                    คูปองกอดฟรีตลอดชีวิต 1 ใบ
+                </h3>
+                
+                <p style="font-size: 14px; color: #555; margin-bottom: 20px;">
+                    (รับสิทธิ์ทันทีเมื่อกดยืนยันข้อตกลงเพื่อรับคูปองนี้)
+                </p>
+
+                <!-- ปุ่มตกลงเพื่อกดยอมรับและรับคูปอง -->
+                <button id="accept-coupon" class="pixel-btn">
+                    [ ตกลงรับสิทธิ์ ]
+                </button>
+
+                <!-- ปุ่มหลบหลีกตลกๆ (ถ้าเมาส์ชี้ ปุ่มจะวิ่งหนีไปที่จุดอื่นทันที) -->
+                <button id="reject-coupon" class="pixel-btn secondary">
+                    [ ไม่ยอมรับ ]
+                </button>
+            </div>
+
+            <!-- =======================================================
+                 SUCCESS CARD (การ์ดยืนยันความสำเร็จที่จะปรากฏเมื่อแฟนตกลงรับสิทธิ์)
+                 ======================================================= -->
+            <div id="success-card" class="pixel-panel" style="background-color: #EBFEEB; border-color: var(--pixel-border);">
+                <!-- หัวใจขนาดใหญ่เฉลิมฉลอง -->
+                <div style="font-size: 40px; margin-bottom: 15px;">💖</div>
+                
+                <h3 style="font-size: 20px; color: #1D5E1D; margin-bottom: 10px;">
+                    ยินดีด้วย! บันทึกคูปองสำเร็จ!
+                </h3>
+                
+                <p style="line-height: 1.8; font-size: 15px; color: #2B6B2B; font-weight: bold;">
+                    สิทธิ์ได้รับการอนุมัติแล้วนะ! เตรียมกางแขนรับอ้อมกอดจากเราได้เลยในครั้งหน้าเจอกัน รักเธอนะครับ! 🎮✨
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
