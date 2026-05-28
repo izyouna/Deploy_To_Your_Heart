@@ -1,29 +1,25 @@
-/* ==========================================
-   1. DESIGN SYSTEM & RETRO TOKENS (CSS Variables)
-   ========================================== */
+
 :root {
-  /* โทนสีเกมพิกเซลพาสเทลโรแมนติก */
-  --pixel-bg-start: #E8D3FF; /* สีม่วงลาเวนเดอร์พาสเทล */
-  --pixel-bg-end: #D3FFFC;   /* สีมินต์พาสเทล */
-  --pixel-border: #000000;   /* สีเส้นขอบพิกเซลดำ */
-  --pixel-panel-bg: #FFFFFF; /* สีพื้นหลังกล่องข้อความ */
-  --pixel-accent-red: #FF3366;  /* สีชมพูอมแดงกุหลาบสดใส */
-  --pixel-accent-yellow: #FFCC00; /* สีเหลืองทองแบบตู้เกมเรโทร */
-  --pixel-accent-blue: #33CCFF;  /* สีฟ้าพาสเทลสดใส */
-  --pixel-accent-green: #33FF66; /* สีเขียวเกมบอย */
-  --pixel-shadow-color: rgba(0, 0, 0, 0.15);
   
-  /* แบบอักษร */
+  --pixel-bg-start: #E8D3FF; 
+  --pixel-bg-end: #D3FFFC;   
+  --pixel-border: #000000;   
+  --pixel-panel-bg: #FFFFFF; 
+  --pixel-accent-red: #FF3366;  
+  --pixel-accent-yellow: #FFCC00; 
+  --pixel-accent-blue: #33CCFF;  
+  --pixel-accent-green: #33FF66; 
+  --pixel-shadow-color: rgba(0, 0, 0, 0.15);
+
   --font-retro: 'Press Start 2P', monospace;
   --font-thai: 'Chakra Petch', sans-serif;
 }
 
-/* รีเซ็ตหน้าเว็บขั้นพื้นฐาน */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    image-rendering: pixelated; /* ทำให้ขอบภาพคมกริบสไตล์พิกเซล */
+    image-rendering: pixelated; 
 }
 
 body {
@@ -39,11 +35,6 @@ body {
     color: #111;
 }
 
-/* ==========================================
-   2. ANIMATIONS & FLOATING EFFECTS
-   ========================================== */
-
-/* พื้นหลังหัวใจลอยสไตล์พิกเซล */
 #bg-decorations {
     position: fixed;
     top: 0;
@@ -81,21 +72,20 @@ body {
     }
 }
 
-/* การหมุนตัวละครสัตว์ 360 องศาต่อเนื่อง */
 .animal-container {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 10px 0;
     position: relative;
-    perspective: 600px; /* เพิ่มมิติความลึกแบบ 3D */
+    perspective: 600px; 
 }
 
 .spinning-animal {
     width: 160px;
     height: 160px;
     object-fit: contain;
-    /* แอนิเมชันหมุนแนวตั้ง 360 องศา (รอบแกน Y) */
+    
     animation: spin360 6s linear infinite;
     filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.15));
     transform-style: preserve-3d;
@@ -106,7 +96,6 @@ body {
     100% { transform: rotateY(360deg); }
 }
 
-/* SVG ไอคอนหัวใจเต้น */
 .heart-pulse {
     display: inline-block;
     animation: heartBeat 1.2s infinite ease-in-out;
@@ -124,7 +113,6 @@ body {
     100% { transform: scale(1); }
 }
 
-/* แอนิเมชันกระพริบตัวอักษร "มีอะไรจะบอก..." */
 .blink-text {
     animation: textBlink 1.5s infinite step-end;
     color: var(--pixel-accent-red);
@@ -136,7 +124,6 @@ body {
     50% { opacity: 0; }
 }
 
-/* แอนิเมชันสั่นปุ่มดึงดูดความสนใจ */
 .wiggle {
     animation: buttonWiggle 0.6s ease-in-out infinite;
 }
@@ -147,10 +134,6 @@ body {
     75% { transform: rotate(3deg) scale(1.05); }
 }
 
-/* ==========================================
-   3. CONTAINER & RETRO UI STYLING
-   ========================================== */
-
 .game-wrapper {
     width: 100%;
     max-width: 680px;
@@ -158,7 +141,6 @@ body {
     z-index: 2;
 }
 
-/* แผง UI หลักสไตล์พิกเซลเกม */
 .pixel-panel {
     background-color: var(--pixel-panel-bg);
     border: 4px solid var(--pixel-border);
@@ -171,7 +153,6 @@ body {
     overflow: hidden;
 }
 
-/* กรอบสีมุมแบบย้อนยุค */
 .pixel-panel::before {
     content: '';
     position: absolute;
@@ -190,7 +171,6 @@ body {
     );
 }
 
-/* หัวข้อเกม 8-bit */
 .game-title {
     font-family: var(--font-retro);
     font-size: 16px;
@@ -200,7 +180,6 @@ body {
     word-wrap: break-word;
 }
 
-/* ปุ่มพิกเซลย้อนยุค */
 .pixel-btn {
     font-family: var(--font-retro);
     font-size: 11px;
@@ -231,7 +210,6 @@ body {
     box-shadow: 0px 0px 0px var(--pixel-border);
 }
 
-/* ปุ่มปฏิเสธ/ยกเลิกสไตล์พิกเซล */
 .pixel-btn.secondary {
     background-color: #E2E2E2;
 }
@@ -239,7 +217,6 @@ body {
     background-color: #EEEEEE;
 }
 
-/* ปุ่มควบคุมเพลง */
 .music-btn {
     position: fixed;
     top: 20px;
@@ -251,11 +228,6 @@ body {
     background: #fff;
 }
 
-/* ==========================================
-   4. STAGES AND STATE MANAGEMENT
-   ========================================== */
-
-/* State 1: The Beginning (หน้าแรกเริ่ม) */
 #state-1 {
     display: block;
     transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
@@ -266,7 +238,6 @@ body {
     opacity: 0;
 }
 
-/* State 2: The Reveal & Journey (เนื้อหาที่เปิดเผย) */
 #state-2 {
     display: none;
     opacity: 0;
@@ -279,11 +250,6 @@ body {
     transform: translateY(0);
 }
 
-/* ==========================================
-   5. MAIN SURPRISE CONTENT (TIMELINE & PROMISE)
-   ========================================== */
-
-/* การ์ดอัลบั้มเดินทางคู่รัก */
 .album-title {
     font-family: var(--font-retro);
     font-size: 14px;
@@ -295,7 +261,6 @@ body {
     gap: 8px;
 }
 
-/* เลย์เอาต์อัลบั้มรูปภาพ */
 .album-grid {
     display: flex;
     flex-direction: column;
@@ -303,7 +268,6 @@ body {
     margin: 20px 0;
 }
 
-/* กรอบรูปถ่ายโพลารอยด์พิกเซล */
 .polaroid-card {
     background: #fff;
     border: 4px solid var(--pixel-border);
@@ -317,7 +281,6 @@ body {
     transform: scale(1.02) rotate(1deg);
 }
 
-/* กล่องภาพพิกเซล */
 .polaroid-img-wrapper {
     width: 100%;
     height: 220px;
@@ -333,7 +296,6 @@ body {
     object-fit: cover;
 }
 
-/* คำอธิบายใต้รูปถ่าย */
 .polaroid-caption {
     margin-top: 15px;
     font-size: 15px;
@@ -350,7 +312,6 @@ body {
     font-family: var(--font-retro);
 }
 
-/* การ์ดคำสัญญา / คูปอง */
 .coupon-box {
     background-color: #FFFBE6;
     border: 4px dashed var(--pixel-accent-red);
@@ -367,7 +328,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* กล่องขอบคุณหลังจากกดยอมรับ */
 #success-card {
     display: none;
     animation: scaleUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -378,7 +338,6 @@ body {
     100% { transform: scale(1); opacity: 1; }
 }
 
-/* แคนวาสสำหรับโปรยเอฟเฟกต์ Confetti */
 #confetti-canvas {
     position: fixed;
     top: 0;
@@ -389,20 +348,15 @@ body {
     z-index: 999;
 }
 
-/* ==========================================
-   6. RESPONSIVE DESIGN (ปรับแต่งทุกขนาดหน้าจอ)
-   ========================================== */
-
-/* สำหรับหน้าจอแท็บเล็ตและเดสก์ท็อป */
 @media (min-width: 600px) {
     .album-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr); /* แสดงรูปภาพเรียงกัน 3 คอลัมน์แนวนอน */
+        grid-template-columns: repeat(3, 1fr); 
         gap: 15px;
     }
     
     .polaroid-img-wrapper {
-        height: 150px; /* ลดส่วนสูงเพื่อความสมดุลในแนวนอน */
+        height: 150px; 
     }
 
     .polaroid-caption {
@@ -418,7 +372,6 @@ body {
     }
 }
 
-/* สำหรับมือถือขนาดเล็กเป็นพิเศษ */
 @media (max-width: 360px) {
     .pixel-panel {
         padding: 15px;
