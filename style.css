@@ -88,20 +88,22 @@ body {
     align-items: center;
     margin: 20px 0;
     position: relative;
+    perspective: 600px; /* เพิ่มมิติความลึกแบบ 3D */
 }
 
 .spinning-animal {
     width: 96px;
     height: 96px;
     object-fit: contain;
-    /* แอนิเมชันหมุน 360 องศา */
-    animation: spin360 12s linear infinite;
+    /* แอนิเมชันหมุนแนวตั้ง 360 องศา (รอบแกน Y) */
+    animation: spin360 6s linear infinite;
     filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.15));
+    transform-style: preserve-3d;
 }
 
 @keyframes spin360 {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
 }
 
 /* SVG ไอคอนหัวใจเต้น */
