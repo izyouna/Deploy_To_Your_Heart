@@ -234,13 +234,13 @@ class GameController {
         this.muteBtn.addEventListener('click', () => {
             this.sound.toggleMute('mute-btn');
         });        
+
+        // เล่นเสียงเพลงทันทีหลังจากมีปฏิสัมพันธ์แรก
+        this.sound.play();
     }
 
     // ทำการเปลี่ยนผ่านหน้าจอจากสถานะที่ 1 ไปสู่สถานะที่ 2
     revealSurprise() {
-        // เล่นเสียงเพลงทันทีหลังจากมีปฏิสัมพันธ์แรก
-        this.sound.play();
-
         // ระเบิดกระดาษพิกเซล Confetti เฉลิมฉลอง
         this.confetti.spawn();
 
